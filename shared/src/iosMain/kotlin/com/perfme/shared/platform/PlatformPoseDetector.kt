@@ -6,8 +6,6 @@ import com.perfme.shared.domain.model.Point3D
 import com.perfme.shared.domain.model.PoseData
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.suspendCancellableCoroutine
-import platform.Foundation.NSData
-import platform.UIKit.UIImage
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
@@ -16,12 +14,11 @@ import kotlin.coroutines.resumeWithException
  */
 @OptIn(ExperimentalForeignApi::class)
 actual class PlatformPoseDetector {
-
     actual suspend fun detectPose(
         imageData: ByteArray,
         width: Int,
         height: Int,
-        useAccurateModel: Boolean
+        useAccurateModel: Boolean,
     ): PoseData {
         return suspendCancellableCoroutine { continuation ->
             try {
@@ -29,11 +26,12 @@ actual class PlatformPoseDetector {
                 // In a real implementation, this would use Vision framework or MLKit
                 val placeholderKeypoints = createPlaceholderKeypoints()
 
-                val poseData = PoseData(
-                    keypoints = placeholderKeypoints,
-                    confidence = 0.8f,
-                    timestamp = platform.Foundation.NSDate().timeIntervalSince1970.toLong() * 1000
-                )
+                val poseData =
+                    PoseData(
+                        keypoints = placeholderKeypoints,
+                        confidence = 0.8f,
+                        timestamp = platform.Foundation.NSDate().timeIntervalSince1970.toLong() * 1000,
+                    )
 
                 continuation.resume(poseData)
             } catch (e: Exception) {
@@ -64,7 +62,7 @@ actual class PlatformPoseDetector {
             Keypoint(Point3D(80f, 280f), 0.7f, KeypointType.LEFT_KNEE),
             Keypoint(Point3D(120f, 280f), 0.7f, KeypointType.RIGHT_KNEE),
             Keypoint(Point3D(75f, 360f), 0.6f, KeypointType.LEFT_ANKLE),
-            Keypoint(Point3D(125f, 360f), 0.6f, KeypointType.RIGHT_ANKLE)
+            Keypoint(Point3D(125f, 360f), 0.6f, KeypointType.RIGHT_ANKLE),
         )
     }
 }

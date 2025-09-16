@@ -17,7 +17,6 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class PoseDetectorAndroidTest {
-
     private lateinit var poseDetector: PlatformPoseDetector
 
     @Before
@@ -31,54 +30,61 @@ class PoseDetectorAndroidTest {
     }
 
     @Test
-    fun testDetectPoseWithValidImageData() = runBlocking {
-        // Create dummy image data (ARGB_8888 format)
-        val width = 100
-        val height = 100
-        val imageData = ByteArray(width * height * 4) { 0xFF.toByte() }
+    fun testDetectPoseWithValidImageData() =
+        runBlocking {
+            // Create dummy image data (ARGB_8888 format)
+            val width = 100
+            val height = 100
+            val imageData = ByteArray(width * height * 4) { 0xFF.toByte() }
 
-        val poseData = poseDetector.detectPose(imageData, width, height, false)
+            val poseData = poseDetector.detectPose(imageData, width, height, false)
 
-        assertNotNull(poseData)
-        assertTrue(poseData.keypoints.isNotEmpty())
-        assertTrue(poseData.confidence >= 0f)
-        assertTrue(poseData.timestamp > 0L)
-    }
-
-    @Test
-    fun testDetectPoseWithAccurateModel() = runBlocking {
-        val width = 100
-        val height = 100
-        val imageData = ByteArray(width * height * 4) { 0xFF.toByte() }
-
-        val poseData = poseDetector.detectPose(imageData, width, height, true)
-
-        assertNotNull(poseData)
-        assertTrue(poseData.keypoints.isNotEmpty())
-    }
-
-    @Test
-    fun testPoseDataContainsExpectedKeypoints() = runBlocking {
-        val width = 200
-        val height = 200
-        val imageData = ByteArray(width * height * 4) { 0xFF.toByte() }
-
-        val poseData = poseDetector.detectPose(imageData, width, height, false)
-
-        // Check for presence of key body parts
-        val hasNose = poseData.keypoints.any { it.type == KeypointType.NOSE }
-        val hasShoulders = poseData.keypoints.any {
-            it.type == KeypointType.LEFT_SHOULDER || it.type == KeypointType.RIGHT_SHOULDER
-        }
-        val hasHips = poseData.keypoints.any {
-            it.type == KeypointType.LEFT_HIP || it.type == KeypointType.RIGHT_HIP
+            assertNotNull(poseData)
+            assertTrue(poseData.keypoints.isNotEmpty())
+            assertTrue(poseData.confidence >= 0f)
+            assertTrue(poseData.timestamp > 0L)
         }
 
-        // Note: These assertions might fail with real ML Kit on empty/invalid images
-        // This is just a structural test for the integration
-        assertTrue("Should detect some body parts",
-            poseData.keypoints.isNotEmpty() || poseData.confidence == 0f)
-    }
+    @Test
+    fun testDetectPoseWithAccurateModel() =
+        runBlocking {
+            val width = 100
+            val height = 100
+            val imageData = ByteArray(width * height * 4) { 0xFF.toByte() }
+
+            val poseData = poseDetector.detectPose(imageData, width, height, true)
+
+            assertNotNull(poseData)
+            assertTrue(poseData.keypoints.isNotEmpty())
+        }
+
+    @Test
+    fun testPoseDataContainsExpectedKeypoints() =
+        runBlocking {
+            val width = 200
+            val height = 200
+            val imageData = ByteArray(width * height * 4) { 0xFF.toByte() }
+
+            val poseData = poseDetector.detectPose(imageData, width, height, false)
+
+            // Check for presence of key body parts
+            val hasNose = poseData.keypoints.any { it.type == KeypointType.NOSE }
+            val hasShoulders =
+                poseData.keypoints.any {
+                    it.type == KeypointType.LEFT_SHOULDER || it.type == KeypointType.RIGHT_SHOULDER
+                }
+            val hasHips =
+                poseData.keypoints.any {
+                    it.type == KeypointType.LEFT_HIP || it.type == KeypointType.RIGHT_HIP
+                }
+
+            // Note: These assertions might fail with real ML Kit on empty/invalid images
+            // This is just a structural test for the integration
+            assertTrue(
+                "Should detect some body parts",
+                poseData.keypoints.isNotEmpty() || poseData.confidence == 0f,
+            )
+        }
 
     @Test
     fun testApplicationContext() {

@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.pose.PoseDetection
 import com.google.mlkit.vision.pose.PoseDetector
-import com.google.mlkit.vision.pose.PoseDetectorOptionsBase
 import com.google.mlkit.vision.pose.PoseLandmark
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions
 import com.google.mlkit.vision.pose.defaults.PoseDetectorOptions
@@ -20,18 +19,19 @@ import kotlin.coroutines.resumeWithException
  * Android implementation of pose detection using ML Kit
  */
 actual class PlatformPoseDetector {
-
     private val fastDetector: PoseDetector by lazy {
-        val options = PoseDetectorOptions.Builder()
-            .setDetectorMode(PoseDetectorOptions.STREAM_MODE)
-            .build()
+        val options =
+            PoseDetectorOptions.Builder()
+                .setDetectorMode(PoseDetectorOptions.STREAM_MODE)
+                .build()
         PoseDetection.getClient(options)
     }
 
     private val accurateDetector: PoseDetector by lazy {
-        val options = AccuratePoseDetectorOptions.Builder()
-            .setDetectorMode(AccuratePoseDetectorOptions.STREAM_MODE)
-            .build()
+        val options =
+            AccuratePoseDetectorOptions.Builder()
+                .setDetectorMode(AccuratePoseDetectorOptions.STREAM_MODE)
+                .build()
         PoseDetection.getClient(options)
     }
 
@@ -39,7 +39,7 @@ actual class PlatformPoseDetector {
         imageData: ByteArray,
         width: Int,
         height: Int,
-        useAccurateModel: Boolean
+        useAccurateModel: Boolean,
     ): PoseData {
         return suspendCancellableCoroutine { continuation ->
             try {
@@ -51,15 +51,17 @@ actual class PlatformPoseDetector {
 
                 detector.process(image)
                     .addOnSuccessListener { pose ->
-                        val keypoints = pose.allPoseLandmarks.mapNotNull { landmark ->
-                            landmark.toKeypoint()
-                        }
+                        val keypoints =
+                            pose.allPoseLandmarks.mapNotNull { landmark ->
+                                landmark.toKeypoint()
+                            }
 
-                        val poseData = PoseData(
-                            keypoints = keypoints,
-                            confidence = keypoints.minOfOrNull { it.confidence } ?: 0f,
-                            timestamp = System.currentTimeMillis()
-                        )
+                        val poseData =
+                            PoseData(
+                                keypoints = keypoints,
+                                confidence = keypoints.minOfOrNull { it.confidence } ?: 0f,
+                                timestamp = System.currentTimeMillis(),
+                            )
 
                         continuation.resume(poseData)
                     }
@@ -88,13 +90,14 @@ actual class PlatformPoseDetector {
         val keypointType = this.landmarkType.toKeypointType() ?: return null
 
         return Keypoint(
-            position = Point3D(
-                x = this.position.x,
-                y = this.position.y,
-                z = this.position3D.z
-            ),
+            position =
+                Point3D(
+                    x = this.position.x,
+                    y = this.position.y,
+                    z = this.position3D.z,
+                ),
             confidence = this.inFrameLikelihood,
-            type = keypointType
+            type = keypointType,
         )
     }
 

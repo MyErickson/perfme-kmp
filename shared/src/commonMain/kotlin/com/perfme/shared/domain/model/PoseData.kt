@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 data class Point3D(
     val x: Float,
     val y: Float,
-    val z: Float = 0f
+    val z: Float = 0f,
 )
 
 /**
@@ -19,7 +19,7 @@ data class Point3D(
 data class Keypoint(
     val position: Point3D,
     val confidence: Float,
-    val type: KeypointType
+    val type: KeypointType,
 )
 
 /**
@@ -44,6 +44,7 @@ enum class KeypointType {
     RIGHT_KNEE,
     LEFT_ANKLE,
     RIGHT_ANKLE,
+
     // Additional ML Kit points
     LEFT_PINKY,
     RIGHT_PINKY,
@@ -54,7 +55,7 @@ enum class KeypointType {
     LEFT_HEEL,
     RIGHT_HEEL,
     LEFT_FOOT_INDEX,
-    RIGHT_FOOT_INDEX
+    RIGHT_FOOT_INDEX,
 }
 
 /**
@@ -64,7 +65,7 @@ enum class KeypointType {
 data class PoseData(
     val keypoints: List<Keypoint>,
     val confidence: Float,
-    val timestamp: Long
+    val timestamp: Long,
 ) {
     /**
      * Get keypoint by type
@@ -85,41 +86,45 @@ data class PoseData(
      */
     fun getLeftArm(): List<Keypoint> {
         return keypoints.filter {
-            it.type in listOf(
-                KeypointType.LEFT_SHOULDER,
-                KeypointType.LEFT_ELBOW,
-                KeypointType.LEFT_WRIST
-            )
+            it.type in
+                listOf(
+                    KeypointType.LEFT_SHOULDER,
+                    KeypointType.LEFT_ELBOW,
+                    KeypointType.LEFT_WRIST,
+                )
         }
     }
 
     fun getRightArm(): List<Keypoint> {
         return keypoints.filter {
-            it.type in listOf(
-                KeypointType.RIGHT_SHOULDER,
-                KeypointType.RIGHT_ELBOW,
-                KeypointType.RIGHT_WRIST
-            )
+            it.type in
+                listOf(
+                    KeypointType.RIGHT_SHOULDER,
+                    KeypointType.RIGHT_ELBOW,
+                    KeypointType.RIGHT_WRIST,
+                )
         }
     }
 
     fun getLeftLeg(): List<Keypoint> {
         return keypoints.filter {
-            it.type in listOf(
-                KeypointType.LEFT_HIP,
-                KeypointType.LEFT_KNEE,
-                KeypointType.LEFT_ANKLE
-            )
+            it.type in
+                listOf(
+                    KeypointType.LEFT_HIP,
+                    KeypointType.LEFT_KNEE,
+                    KeypointType.LEFT_ANKLE,
+                )
         }
     }
 
     fun getRightLeg(): List<Keypoint> {
         return keypoints.filter {
-            it.type in listOf(
-                KeypointType.RIGHT_HIP,
-                KeypointType.RIGHT_KNEE,
-                KeypointType.RIGHT_ANKLE
-            )
+            it.type in
+                listOf(
+                    KeypointType.RIGHT_HIP,
+                    KeypointType.RIGHT_KNEE,
+                    KeypointType.RIGHT_ANKLE,
+                )
         }
     }
 }

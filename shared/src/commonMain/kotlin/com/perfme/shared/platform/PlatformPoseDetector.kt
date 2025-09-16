@@ -18,7 +18,7 @@ expect class PlatformPoseDetector() {
         imageData: ByteArray,
         width: Int,
         height: Int,
-        useAccurateModel: Boolean = false
+        useAccurateModel: Boolean = false,
     ): PoseData
 
     /**

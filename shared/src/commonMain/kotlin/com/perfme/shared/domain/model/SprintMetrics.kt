@@ -11,7 +11,7 @@ data class SprintMetrics(
     val hipVelocity: Double,
     val armSymmetry: Double,
     val overallScore: Double,
-    val timestamp: Long
+    val timestamp: Long,
 ) {
     /**
      * Get feedback based on metrics
@@ -69,7 +69,7 @@ enum class MetricFeedback {
     GOOD,
     ACCEPTABLE,
     TOO_LOW,
-    TOO_HIGH
+    TOO_HIGH,
 }
 
 /**
@@ -79,7 +79,7 @@ enum class MetricFeedback {
 data class SprintAnalysis(
     val metrics: SprintMetrics,
     val recommendations: List<String>,
-    val priority: AnalysisPriority
+    val priority: AnalysisPriority,
 )
 
 /**
@@ -90,5 +90,5 @@ enum class AnalysisPriority {
     LOW,
     MEDIUM,
     HIGH,
-    CRITICAL
+    CRITICAL,
 }

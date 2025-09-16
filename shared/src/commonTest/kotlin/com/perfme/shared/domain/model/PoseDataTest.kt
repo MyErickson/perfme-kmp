@@ -8,7 +8,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class PoseDataTest {
-
     private fun createTestKeypoints(): List<Keypoint> {
         return listOf(
             Keypoint(Point3D(100f, 50f), 0.9f, KeypointType.NOSE),
@@ -18,7 +17,7 @@ class PoseDataTest {
             Keypoint(Point3D(60f, 160f), 0.6f, KeypointType.LEFT_WRIST),
             Keypoint(Point3D(85f, 200f), 0.8f, KeypointType.LEFT_HIP),
             Keypoint(Point3D(80f, 280f), 0.7f, KeypointType.LEFT_KNEE),
-            Keypoint(Point3D(75f, 360f), 0.6f, KeypointType.LEFT_ANKLE)
+            Keypoint(Point3D(75f, 360f), 0.6f, KeypointType.LEFT_ANKLE),
         )
     }
 

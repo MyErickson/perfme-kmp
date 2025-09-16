@@ -4,7 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class SprintMetricsTest {
-
     @Test
     fun testGetKneeAngleFeedback() {
         val optimalMetrics = SprintMetrics(120.0, 3.0, 5.0, 85.0, 123456789L)
