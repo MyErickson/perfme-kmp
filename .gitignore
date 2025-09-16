@@ -55,9 +55,11 @@ yarn-error.log*
 **/coverage/
 **/jacoco/
 
-# Quality gates
-**/detekt/
-**/ktlint/
+# Quality gates - exclude reports but keep config
+**/detekt/reports/
+**/ktlint/reports/
+!config/detekt/
+!config/ktlint/
 
 # Docker
 .dockerignore
