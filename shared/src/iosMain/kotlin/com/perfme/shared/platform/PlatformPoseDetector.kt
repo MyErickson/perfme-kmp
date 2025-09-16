@@ -30,7 +30,7 @@ actual class PlatformPoseDetector {
                     PoseData(
                         keypoints = placeholderKeypoints,
                         confidence = 0.8f,
-                        timestamp = platform.Foundation.NSDate().timeIntervalSince1970.toLong() * 1000,
+                        timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
                     )
 
                 continuation.resume(poseData)

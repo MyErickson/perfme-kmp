@@ -159,7 +159,7 @@ class BiomechanicsEngine {
         val cosAngle = dotProduct / (magnitude1 * magnitude2)
         val clampedCosAngle = cosAngle.coerceIn(-1f, 1f)
 
-        return Math.toDegrees(acos(clampedCosAngle.toDouble()))
+        return kotlin.math.acos(clampedCosAngle.toDouble()) * 180.0 / kotlin.math.PI
     }
 
     private fun calculateDistance(
