@@ -1,0 +1,114 @@
+# Kotlin Multiplatform
+*.iml
+.gradle
+local.properties
+.idea/
+.vscode/
+*.hprof
+.DS_Store
+
+# Android
+androidApp/build/
+androidApp/.cxx/
+androidApp/captures/
+androidApp/proguard/
+*.ap_
+*.dex
+
+# iOS
+iosApp/build/
+iosApp/DerivedData/
+iosApp/*.xcworkspace/xcuserdata/
+iosApp/*.xcodeproj/xcuserdata/
+iosApp/*.xcodeproj/project.xcworkspace/
+
+# Shared
+shared/build/
+
+# Gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# IntelliJ IDEA
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+# Xcode
+xcuserdata/
+*.xcworkspace/
+DerivedData/
+
+# Node.js (for documentation generation)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test results
+**/test-results/
+**/test-reports/
+
+# Coverage reports
+**/coverage/
+**/jacoco/
+
+# Quality gates
+**/detekt/
+**/ktlint/
+
+# Docker
+.dockerignore
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+
+# JetBrains Fleet
+.fleet/
+
+# Android Studio Navigation editor temp files
+.navigation/
+
+# Android Studio captures folder
+captures/
+
+# External native build folder generated in Android Studio 2.2 and later
+.externalNativeBuild/
+.cxx/
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Freeline
+freeline.py
+freeline/
+freeline_project_description.json
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/readme.md
+
+# Version control
+*.orig
+*.rej
+
+# Profiling
+*.trace

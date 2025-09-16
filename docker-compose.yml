@@ -1,0 +1,158 @@
+version: '3.8'
+
+services:
+  # Development environment
+  perfme-dev:
+    build:
+      context: .
+      target: development
+    container_name: perfme-dev
+    volumes:
+      - .:/home/developer/app
+      - gradle-cache:/home/developer/.gradle
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+      - "8082:8082"
+    environment:
+      - GRADLE_OPTS=-Dorg.gradle.daemon=false
+    command: ["./gradlew", "shared:build", "--continuous"]
+    networks:
+      - perfme-network
+
+  # Test runner
+  perfme-test:
+    build:
+      context: .
+      target: test
+    container_name: perfme-test
+    volumes:
+      - .:/app
+      - gradle-cache:/root/.gradle
+    environment:
+      - GRADLE_OPTS=-Dorg.gradle.daemon=false
+    command: ["./gradlew", "test", "--continuous"]
+    networks:
+      - perfme-network
+
+  # Android build environment
+  perfme-android:
+    build:
+      context: .
+      target: android-build
+    container_name: perfme-android
+    volumes:
+      - .:/app
+      - gradle-cache:/root/.gradle
+      - android-sdk:/opt/android-sdk
+    environment:
+      - ANDROID_HOME=/opt/android-sdk
+      - GRADLE_OPTS=-Dorg.gradle.daemon=false
+    ports:
+      - "5037:5037"  # ADB port
+    networks:
+      - perfme-network
+
+  # Code quality checks
+  perfme-quality:
+    build:
+      context: .
+      target: build
+    container_name: perfme-quality
+    volumes:
+      - .:/app
+      - gradle-cache:/root/.gradle
+    environment:
+      - GRADLE_OPTS=-Dorg.gradle.daemon=false
+    command: ["./gradlew", "ktlintCheck", "detekt"]
+    networks:
+      - perfme-network
+
+  # Production runtime
+  perfme-prod:
+    build:
+      context: .
+      target: production
+    container_name: perfme-prod
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_OPTS=-Xmx512m -Xms256m
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - perfme-network
+
+  # Database (for future use)
+  postgres:
+    image: postgres:15-alpine
+    container_name: perfme-db
+    environment:
+      POSTGRES_DB: perfme
+      POSTGRES_USER: perfme
+      POSTGRES_PASSWORD: perfme_password
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - perfme-network
+
+  # Redis (for caching)
+  redis:
+    image: redis:7-alpine
+    container_name: perfme-redis
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    networks:
+      - perfme-network
+
+  # Monitoring with Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: perfme-prometheus
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+    networks:
+      - perfme-network
+
+  # Grafana for visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: perfme-grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - perfme-network
+
+volumes:
+  gradle-cache:
+  android-sdk:
+  postgres-data:
+  redis-data:
+  prometheus-data:
+  grafana-data:
+
+networks:
+  perfme-network:
+    driver: bridge
