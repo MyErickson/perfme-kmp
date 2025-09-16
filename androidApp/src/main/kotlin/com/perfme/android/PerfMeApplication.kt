@@ -6,7 +6,6 @@ import android.app.Application
  * Application class for PerfMe Android app
  */
 class PerfMeApplication : Application() {
-
     override fun onCreate() {
         super.onCreate()
         instance = this

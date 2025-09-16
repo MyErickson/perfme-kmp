@@ -67,8 +67,10 @@ class BiomechanicsEngineTest {
                 Keypoint(Point3D(100f, 50f), 0.9f, KeypointType.NOSE),
                 Keypoint(Point3D(80f, 80f), 0.8f, KeypointType.LEFT_SHOULDER),
                 Keypoint(Point3D(120f, 80f), 0.8f, KeypointType.RIGHT_SHOULDER),
-                Keypoint(Point3D(95f, 200f), 0.8f, KeypointType.LEFT_HIP), // Moved 10 pixels right
-                Keypoint(Point3D(125f, 200f), 0.8f, KeypointType.RIGHT_HIP), // Moved 10 pixels right
+                // Moved 10 pixels right
+                Keypoint(Point3D(95f, 200f), 0.8f, KeypointType.LEFT_HIP),
+                // Moved 10 pixels right
+                Keypoint(Point3D(125f, 200f), 0.8f, KeypointType.RIGHT_HIP),
                 Keypoint(Point3D(80f, 280f), 0.7f, KeypointType.LEFT_KNEE),
                 Keypoint(Point3D(120f, 280f), 0.7f, KeypointType.RIGHT_KNEE),
                 Keypoint(Point3D(75f, 360f), 0.6f, KeypointType.LEFT_ANKLE),
@@ -91,9 +93,11 @@ class BiomechanicsEngineTest {
                 Keypoint(Point3D(80f, 80f), 0.8f, KeypointType.LEFT_SHOULDER),
                 Keypoint(Point3D(120f, 80f), 0.8f, KeypointType.RIGHT_SHOULDER),
                 Keypoint(Point3D(70f, 120f), 0.7f, KeypointType.LEFT_ELBOW),
-                Keypoint(Point3D(130f, 120f), 0.7f, KeypointType.RIGHT_ELBOW), // Symmetric position
+                // Symmetric position
+                Keypoint(Point3D(130f, 120f), 0.7f, KeypointType.RIGHT_ELBOW),
                 Keypoint(Point3D(60f, 160f), 0.6f, KeypointType.LEFT_WRIST),
-                Keypoint(Point3D(140f, 160f), 0.6f, KeypointType.RIGHT_WRIST), // Symmetric position
+                // Symmetric position
+                Keypoint(Point3D(140f, 160f), 0.6f, KeypointType.RIGHT_WRIST),
                 Keypoint(Point3D(85f, 200f), 0.8f, KeypointType.LEFT_HIP),
                 Keypoint(Point3D(115f, 200f), 0.8f, KeypointType.RIGHT_HIP),
             )
@@ -113,9 +117,11 @@ class BiomechanicsEngineTest {
                 Keypoint(Point3D(80f, 80f), 0.8f, KeypointType.LEFT_SHOULDER),
                 Keypoint(Point3D(120f, 80f), 0.8f, KeypointType.RIGHT_SHOULDER),
                 Keypoint(Point3D(70f, 120f), 0.7f, KeypointType.LEFT_ELBOW),
-                Keypoint(Point3D(150f, 100f), 0.7f, KeypointType.RIGHT_ELBOW), // Very different position
+                // Very different position
+                Keypoint(Point3D(150f, 100f), 0.7f, KeypointType.RIGHT_ELBOW),
                 Keypoint(Point3D(60f, 160f), 0.6f, KeypointType.LEFT_WRIST),
-                Keypoint(Point3D(180f, 80f), 0.6f, KeypointType.RIGHT_WRIST), // Very different position
+                // Very different position
+                Keypoint(Point3D(180f, 80f), 0.6f, KeypointType.RIGHT_WRIST),
                 Keypoint(Point3D(85f, 200f), 0.8f, KeypointType.LEFT_HIP),
                 Keypoint(Point3D(115f, 200f), 0.8f, KeypointType.RIGHT_HIP),
             )
