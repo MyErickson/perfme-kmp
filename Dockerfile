@@ -1,7 +1,8 @@
 # Multi-stage Dockerfile for PerfMe KMP project
 
 # Stage 1: Build environment
-FROM openjdk:17-jdk-slim AS build
+# openjdk:17-jdk-slim pinned by SHA256
+FROM openjdk@sha256:4d187395a2f89f06dbc9bac1cc3fb143b7a515b5875dbb2b79dc3e94f66ed69b AS build
 
 # Install required packages
 RUN apt-get update && apt-get install -y \
@@ -59,7 +60,8 @@ RUN sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 RUN ./gradlew androidApp:assembleDebug --no-daemon
 
 # Stage 4: Development environment
-FROM openjdk:17-jdk-slim AS development
+# openjdk:17-jdk-slim pinned by SHA256
+FROM openjdk@sha256:4d187395a2f89f06dbc9bac1cc3fb143b7a515b5875dbb2b79dc3e94f66ed69b AS development
 
 # Install development tools
 RUN apt-get update && apt-get install -y \
@@ -85,7 +87,8 @@ EXPOSE 8080 8081 8082
 CMD ["./gradlew", "shared:build", "--continuous"]
 
 # Stage 5: Production runtime (minimal)
-FROM openjdk:17-jre-slim AS production
+# openjdk:17-jre-slim pinned by SHA256
+FROM openjdk@sha256:aac7b4d8c72c0c3d39e4c8102b4638ef7e5a0b30f9b52e76a2aa0e88b0a2b5c8 AS production
 
 # Install runtime dependencies
 RUN apt-get update && apt-get install -y \
