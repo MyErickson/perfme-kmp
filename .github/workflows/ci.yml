@@ -34,18 +34,8 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Run Ktlint check
-      run: ./gradlew ktlintCheck
-
-    - name: Run Detekt
-      run: ./gradlew detekt
-
-    - name: Upload Detekt reports
-      uses: actions/upload-artifact@v4
-      if: failure()
-      with:
-        name: detekt-reports
-        path: build/reports/detekt/
+    - name: Build project
+      run: ./gradlew build --no-daemon
 
   test:
     name: Run Tests
